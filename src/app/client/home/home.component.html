@@ -6,37 +6,31 @@
     <div fxFlex.gt-sm="100%" fxFlex="100">
         <mat-card>
             <mat-card-content>
-                <mat-card-title>Stepper</mat-card-title>
-                <mat-card-subtitle>Check the
-                    <code class="">
-                        <a href="/">
-                            Official Component
-                        </a>
-                    </code>
-                </mat-card-subtitle>
-                <button mat-raised-button (click)="isLinear = true" id="toggle-linear">
-                    Enable linear mode
-                </button>
-                <mat-horizontal-stepper [linear]="isLinear">
-                    <mat-step [stepControl]="firstFormGroup">
-                        <form [formGroup]="firstFormGroup">
-                            <ng-template matStepLabel>Fill out your name</ng-template>
+                <mat-card-title>Booking</mat-card-title>
+                <mat-horizontal-stepper [linear]="isLinear" (selectionChange)="doChangeSelection($event)">
+                    <mat-step [stepControl]="formUser">
+                        <form [formGroup]="formUser">
+                            <ng-template matStepLabel>Your information</ng-template>
                             <mat-form-field>
-                                <input matInput placeholder="Last name, First name" formControlName="firstCtrl"
-                                    required>
+                                <input matInput placeholder="Fullname" formControlName="fullName" required/>
                             </mat-form-field>
-                            <div>
-                                <button mat-raised-button color="warn" matStepperNext>Next</button>
+                            <mat-form-field>
+                                <input matInput placeholder="Your phone number" formControlName="phone" required/>
+                            </mat-form-field>
+                            <div class="text-center">
+                                <button mat-raised-button color="warn" matStepperNext>
+                                    Next
+                                </button>
                             </div>
                         </form>
                     </mat-step>
-                    <mat-step [stepControl]="secondFormGroup">
-                        <form [formGroup]="secondFormGroup">
-                            <ng-template matStepLabel>Fill out your address</ng-template>
+                    <mat-step [stepControl]="formDepartment">
+                        <form [formGroup]="formDepartment">
+                            <ng-template matStepLabel>Select Department</ng-template>
                             <mat-form-field>
-                                <input matInput placeholder="Address" formControlName="secondCtrl" required>
+                                <input matInput placeholder="Address" formControlName="departmentId" required>
                             </mat-form-field>
-                            <div>
+                            <div class="text-center">
                                 <button mat-raised-button color="accent" matStepperPrevious>
                                     Back
                                 </button>
@@ -47,9 +41,8 @@
                         </form>
                     </mat-step>
                     <mat-step>
-                        <ng-template matStepLabel>Done</ng-template>
-                        You are now done.
-                        <div>
+                        <ng-template matStepLabel>Booking time</ng-template>
+                        <div class="text-center">
                             <button mat-raised-button color="accent" matStepperPrevious>
                                 Back
                             </button>

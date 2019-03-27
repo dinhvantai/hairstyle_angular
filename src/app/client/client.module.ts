@@ -11,10 +11,12 @@ const routing: Routes = [
     {
         path: '',
         component: LayoutClientComponent,
+        pathMatch: 'full',
         children: [
             {
                 path: '',
                 component: HomeClientComponent,
+                pathMatch: 'full',
             },
         ],
     },
