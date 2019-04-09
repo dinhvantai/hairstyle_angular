@@ -1,22 +1,21 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Routes, RouterModule } from '@angular/router';
-import { AppMaterialModule } from 'src/app/app-material.module';
-import { HomeClientComponent } from './home/home.component';
-import { HeaderClientComponent } from './header/header.component';
-import { LayoutClientComponent } from './layout/layout.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {AppMaterialModule} from 'src/app/app-material.module';
+import {HeaderClientComponent} from './components/header/header.component';
+import {LayoutClientComponent} from './components/layout/layout.component';
+import {StoreModule} from '@ngrx/store';
+import {EffectsModule} from '@ngrx/effects';
+import {routerReducer, StoreRouterConnectingModule} from '@ngrx/router-store';
+import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 
 const routing: Routes = [
     {
         path: '',
         component: LayoutClientComponent,
-        pathMatch: 'full',
         children: [
             {
                 path: '',
-                component: HomeClientComponent,
-                pathMatch: 'full',
+                loadChildren: './pages/home/home.module#HomeClientModule',
             },
         ],
     },
@@ -24,18 +23,19 @@ const routing: Routes = [
 
 @NgModule({
     imports: [
-        CommonModule,
         RouterModule.forChild(routing),
+        EffectsModule.forRoot([]),
+        StoreModule.forRoot({router: routerReducer}),
+        StoreRouterConnectingModule.forRoot(),
+        StoreDevtoolsModule.instrument({maxAge: 25}),
         AppMaterialModule,
-        FormsModule,
-        ReactiveFormsModule,
     ],
     declarations: [
-        HomeClientComponent,
         LayoutClientComponent,
         HeaderClientComponent,
     ],
 })
 
-export class ClientModule { }
+export class ClientModule {
+}
 

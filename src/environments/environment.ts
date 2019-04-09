@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'http://localhost:2200/api/v0'
+  baseUrl: 'http://hairstyle.local:1010/api/v0'
 };
 
 /*

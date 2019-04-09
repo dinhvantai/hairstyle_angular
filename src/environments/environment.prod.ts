@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  baseUrl: 'http://127.0.0.1:2200/api/v0'
+  baseUrl: 'http://hairstyle.local:1010/api/v0'
 };

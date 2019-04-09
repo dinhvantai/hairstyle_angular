@@ -10,7 +10,7 @@ import { MediaMatcher } from '@angular/cdk/layout';
 export class LayoutManagementComponent implements OnInit {
     mobileQuery: MediaQueryList;
 
-    private mobileQueryListener: () => void;
+    private readonly mobileQueryListener: () => void;
 
     constructor(
         changeDetectorRef: ChangeDetectorRef,
@@ -23,11 +23,6 @@ export class LayoutManagementComponent implements OnInit {
     }
 
     // tslint:disable-next-line: use-life-cycle-interface
-    ngOnDestroy(): void {
-        // tslint:disable-next-line: deprecation
-        this.mobileQuery.removeListener(this.mobileQueryListener);
-    }
-
     ngOnInit() { }
 }
 

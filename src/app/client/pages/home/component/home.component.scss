@@ -1,0 +1,97 @@
+$booking-status-height: 25px;
+
+.department {
+    justify-content: center;
+
+    &__button {
+        display: flex;
+        margin-top: 20px;
+
+        &--left {
+            margin-right: auto;
+        }
+
+        &--right {
+            margin-left: auto;
+        }
+    }
+
+    &__spinner {
+        display: flex;
+        justify-content: center;
+    }
+
+    &__list {
+        padding: 20px;
+        cursor: pointer;
+        height: 100px;
+        flex-direction: column;
+        margin: 20px auto;
+    }
+
+    &__select-day {
+        margin: 0 auto 50px auto;
+        max-width: 800px;
+
+        &__item {
+            cursor: pointer;
+            border: 1px solid rgba(8, 8, 7, 0.18);
+            list-style-type: none;
+            box-shadow: 1px 2px 2px #888;
+            margin-left: 5px;
+            margin-bottom: 5px;
+            border-radius: 3px 3px;
+            text-align: center;
+        }
+
+        .active {
+            background-color: #7f7f7f;
+            border: 1px solid #ccc;
+        }
+    }
+
+    &__booking {
+        max-width: 800px;
+        margin: auto;
+
+        &__item {
+            cursor: pointer;
+            border: 1px solid rgba(8, 8, 7, 0.18);
+            list-style-type: none;
+            box-shadow: 1px 2px 2px #888;
+            margin-left: 5px;
+            margin-bottom: 5px;
+            border-radius: 3px 3px;
+            text-align: center;
+
+            &__title {
+                height: calc(100% - #{$booking-status-height});
+                line-height: 75px;
+                text-align: center;
+                width: 100%;
+                font-size: 27px;
+                font-weight: bold;
+                color: #6173f4;
+            }
+
+            &__status {
+                height: $booking-status-height;
+                line-height: $booking-status-height;
+                text-align: center;
+                background-color: green;
+                width: 100%;
+            }
+
+            .full {
+                background-color: red;
+            }
+        }
+
+        .active {
+            background-color: #6072f3;
+            .department__booking__item__title {
+                color: #fff;
+            }
+        }
+    }
+}

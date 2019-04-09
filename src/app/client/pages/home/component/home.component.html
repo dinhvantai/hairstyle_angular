@@ -1,0 +1,113 @@
+<div fxLayout="row" fxLayoutWrap="wrap">
+    <!-- Card column -->
+    <div fxFlex="100" fxFlex.gt-sm="100%">
+        <mat-card>
+            <mat-card-content>
+                <mat-card-title>Booking</mat-card-title>
+                <mat-horizontal-stepper (selectionChange)="doChangeSelection($event)" [linear]="isLinear">
+                    <mat-step [stepControl]="formUser">
+                        <form [formGroup]="formUser">
+                            <ng-template matStepLabel>Your information</ng-template>
+                            <mat-form-field>
+                                <input autocomplete="off" formControlName="fullName" matInput placeholder="Fullname"
+                                       required/>
+                            </mat-form-field>
+                            <mat-form-field>
+                                <input autocomplete="off" formControlName="phone" matInput
+                                       placeholder="Your phone number"
+                                       required/>
+                            </mat-form-field>
+                            <div class="department__button">
+                                <button class="department__button--right" color="warn" mat-raised-button matStepperNext>
+                                    Next
+                                </button>
+                            </div>
+                        </form>
+                    </mat-step>
+                    <mat-step [completed]="selectedDepartmentId">
+                        <ng-template matStepLabel>Select Department</ng-template>
+                        <h4 class="text-center">Select Department</h4>
+                        <mat-chip-list class="department">
+                            <mat-chip (click)="onSelectDepartment(department.id)"
+                                      *ngFor="let department of (departments$ | async)"
+                                      [selected]="department.id === selectedDepartmentId" class="department__list"
+                                      color="primary"
+                            >
+                                <div>{{department.name}}</div>
+                                <span>{{department.address}}</span>
+                            </mat-chip>
+                        </mat-chip-list>
+                        <br/>
+                        <div class="department__button">
+                            <button class="department__button--left" color="accent" mat-raised-button
+                                    matStepperPrevious>
+                                Back
+                            </button>
+                            <button class="department__button--right" color="warn" mat-raised-button matStepperNext>
+                                Next
+                            </button>
+                        </div>
+                    </mat-step>
+                    <mat-step>
+                        <ng-template matStepLabel>Booking time</ng-template>
+                        <mat-form-field>
+                            <mat-label>Select stylist</mat-label>
+                            <mat-select (selectionChange)="onSelectStylist($event)"
+                                        *ngIf="(stylists$ | async)[selectedDepartmentId]">
+                                <mat-option value="">Auto select Stylist</mat-option>
+                                <mat-option *ngFor="let stylist of (stylists$ | async)[selectedDepartmentId]"
+                                            [value]="stylist.id">
+                                    {{stylist.name}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-select *ngIf="!(stylists$ | async)[selectedDepartmentId]"
+                                        [(value)]="selectedStylistId">
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-grid-list class="department__select-day" cols="3" rowHeight="35px">
+                            <mat-grid-tile
+                                (click)="onSelectedDay(time.key)"
+                                *ngFor="let time of selectTimes.options"
+                                [class.active]="time.key === selectTimes.current" [colspan]="1"
+                                [rowspan]="1"
+                                class="department__select-day__item"
+                            >
+                                <div class="department__card__item__title">{{time.text}}</div>
+                            </mat-grid-tile>
+                        </mat-grid-list>
+                        <div *ngIf="isSpinnerRenderBooking$ | async" class="department__spinner">
+                            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                        </div>
+                        <mat-grid-list *ngIf="!(isSpinnerRenderBooking$ | async)" class="department__booking" cols="4"
+                                       rowHeight="100px">
+                            <mat-grid-tile
+                                (click)="onSelectedRenderBooking(booking)"
+                                *ngFor="let booking of (renderBookings$ | async)"
+                                [class.active]="booking.id === selectedBookingId" [colspan]="1"
+                                [rowspan]="1"
+                                class="department__booking__item"
+                            >
+                                <div
+                                    class="department__booking__item__title">{{booking.time_start?.split(':').slice(0, 2).join(':')}}</div>
+                                <div [class.full]="!booking.status" class="department__booking__item__status">
+                                    {{booking.statusLabel}}
+                                </div>
+                            </mat-grid-tile>
+                        </mat-grid-list>
+                        <div class="department__button">
+                            <button class="department__button--left" color="accent" mat-raised-button
+                                    matStepperPrevious>
+                                Back
+                            </button>
+                            <button (click)="onSendBooking()" class="department__button--right" color="warn"
+                                    mat-raised-button>
+                                Booking
+                            </button>
+                        </div>
+                    </mat-step>
+                </mat-horizontal-stepper>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
